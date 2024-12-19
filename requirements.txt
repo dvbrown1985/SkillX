@@ -1,0 +1,8 @@
+streamlit
+numpy
+Pillow
+google-generativeai
+tensorflow
+scikit-learn
+sentence-transformers
+torch
