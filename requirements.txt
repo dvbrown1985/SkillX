@@ -1,12 +1,13 @@
-import os
-import pickle
-import joblib
-import numpy as np
-from PIL import Image
-import streamlit as st
-import tensorflow as tf
-from tensorflow.keras import Input
-import google.generativeai as genai
-from sklearn.preprocessing import LabelEncoder
-from sentence_transformers import SentenceTransformer
-from torch.utils.cpp_extension import CppExtension, BuildExtension
+Streamlit
+os
+pickle
+joblib
+numpy as np
+PIL import Image
+streamlit as st
+tensorflow as tf
+tensorflow.keras import Input
+google.generativeai as genai
+sklearn.preprocessing import LabelEncoder
+sentence_transformers import SentenceTransformer
+torch.utils.cpp_extension import CppExtension, BuildExtension
