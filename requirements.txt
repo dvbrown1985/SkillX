@@ -1,9 +1,0 @@
-streamlit
-numpy
-Pillow
-pip install tf-keras
-google-generativeai
-scikit-learn
-sentence-transformers
-torch
-joblib
