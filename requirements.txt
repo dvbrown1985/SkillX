@@ -1,0 +1,10 @@
+streamlit
+numpy
+Pillow
+Tensorflow
+tensorflow.keras
+google-generativeai
+scikit-learn
+sentence-transformers
+torch
+joblib
