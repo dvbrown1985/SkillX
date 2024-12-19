@@ -1,0 +1,12 @@
+streamlit
+os
+pickle
+joblib
+numpy 
+PIL
+tensorflow
+tensorflow.keras
+google.generativeai
+sklearn.preprocessing
+sentence_transformers
+torch.utils.cpp_extension
