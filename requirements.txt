@@ -1,0 +1,9 @@
+streamlit
+numpy
+Pillow
+tensorflow==2.13.0
+google-generativeai
+scikit-learn
+sentence-transformers
+torch
+joblib
