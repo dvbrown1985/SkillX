@@ -1,0 +1,12 @@
+streamlit
+googlesearch-python==1.2.5
+numpy
+dill
+Pillow
+google-generativeai
+tensorflow
+tf-keras
+scikit-learn
+sentence-transformers
+torch
+
