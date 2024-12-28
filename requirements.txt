@@ -1,0 +1,11 @@
+google==3.0.0
+google_search==1.1.1
+googlesearch_python==1.2.5
+joblib==1.2.0
+numpy
+Pillow==11.0.0
+protobuf
+scikit_learn
+sentence_transformers==3.3.1
+streamlit
+tensorflow
