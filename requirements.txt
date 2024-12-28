@@ -1,0 +1,10 @@
+google==3.0.0
+google-generativeai
+googlesearch_python
+joblib
+numpy
+Pillow
+protobuf
+scikit_learn
+streamlit
+tensorflow
