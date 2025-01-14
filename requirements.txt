@@ -1,0 +1,13 @@
+google==3.0.0
+google-generativeai
+googlesearch_python
+fpdf
+joblib
+numpy
+Pillow
+protobuf
+scikit_learn
+sentence-transformers
+streamlit
+tensorflow
+Tf-keras
