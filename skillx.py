@@ -354,7 +354,7 @@ consolidated_prompt = f"""
     Structure:
         
         For each recommended role:
-            "Recommendation #: (bold)" (e.g., "Recommendation #1") followed by **"Job Title" (bold). If a role prediction is deemed inappropriate, replace it with a suitable alternative from your knowledge base without any annotation.
+            "(bold) Recommendation #:" (e.g., "Recommendation #1") followed by **"Job Title". If a role prediction is deemed inappropriate, replace it with a suitable alternative from your knowledge base without any annotation.
             "Job Description" (bold and prominent): Concise and informative (2-3 sentences) focusing on key responsibilities and required skills.
             "Average Annual Salary"(bold font and prominent): If available, provide the average annual salary in US dollars in a uniform font size. If unavailable, state "Salary information unavailable."
             "Skill Match Analysis Summary" (bold and prominent): Provide an elaborate analysis describing how the job seeker's top skills and how they align with the recommended role. Classify their skills as a strong, partial, or weak match.
