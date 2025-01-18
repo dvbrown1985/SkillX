@@ -119,7 +119,7 @@ def download_recommendations():
     # Set margins to one inch (25.4 mm)
     one_inch_in_mm = 2
     pdf.set_margins(left=one_inch_in_mm, top=one_inch_in_mm, right=one_inch_in_mm)
-    pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm) # Adjust bottom margin for auto-page-break
+    pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm)  # Adjust bottom margin for auto-page-break
 
     # Calculate available width (considering margins)
     available_width = pdf.w - pdf.l_margin - pdf.r_margin
@@ -128,8 +128,8 @@ def download_recommendations():
         wrapped_lines = textwrap.wrap(line, width=int(available_width / 2))
 
         for wrapped_line in wrapped_lines:
-            pdf.multi_cell(available_width, 8, wrapped_line, align=Align.L)  # Increased cell height to 10
-            pdf.ln(8)  #Ensures correct spacing between lines
+            pdf.multi_cell(available_width, 8, wrapped_line, align="L")  # Use string "L" for left alignment
+            pdf.ln(8)  # Ensures correct spacing between lines
 
     pdf_buffer = BytesIO()
     pdf.output(pdf_buffer, 'F')
