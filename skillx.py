@@ -1,4 +1,4 @@
-from fpdf import FPDF
+import FPDF
 from io import BytesIO
 import textwrap
 import os
