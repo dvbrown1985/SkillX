@@ -1,5 +1,6 @@
-from fpdf import FPDF
+from fpdf import FPDF, Align
 from io import BytesIO
+import textwrap
 import os
 import re
 import pickle
@@ -101,6 +102,45 @@ def predict_top_3_job_roles(model_inputs):
     print(predicted_roles)
     st.success('Predictions generated!', icon="🤖")
     return predicted_roles
+
+@st.fragment
+def download_recommendations():
+    # Collect all messages in the format 'role: content'
+    all_messages_text = "\n\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
+    
+    wrapped_text = "\n\n".join("\n".join(textwrap.wrap(line, width=80)) for line in all_messages_text.split("\n"))
+
+    pdf = FPDF()
+    pdf.add_page()
+
+    pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)
+    pdf.set_font('DejaVu', '', 12)
+
+    # Set margins to one inch (25.4 mm)
+    one_inch_in_mm = 2
+    pdf.set_margin(one_inch_in_mm)
+    pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm)  # Adjust bottom margin for auto-page-break
+
+    # Calculate available width (considering margins)
+    available_width = pdf.w - pdf.l_margin - pdf.r_margin
+
+    for line in all_messages_text.split('\n'):
+        wrapped_lines = textwrap.wrap(line, width=int(available_width / 2))
+
+        for wrapped_line in wrapped_lines:
+            pdf.multi_cell(available_width, 8, wrapped_line, align=Align.L)  # Increased cell height to 10
+            pdf.ln(8)  #Ensures correct spacing between lines
+
+    pdf_buffer = BytesIO()
+    pdf.output(pdf_buffer, 'F')
+    pdf_buffer.seek(0)
+
+    st.download_button(
+        label="Download learning resources & recommendations",
+        data=pdf_buffer,
+        file_name="SkillX_recommendations.pdf",
+        mime="application/pdf"
+    )
 
 def extract_job_titles(response_text):
     
@@ -379,19 +419,6 @@ consolidated_prompt = f"""
 
 response_text = ""
 model = genai.GenerativeModel("gemini-1.5-flash-002")
-
-@st.fragment
-def download_recommendations():
-    # Collect all messages in the format 'role: content'
-    all_messages_text = "\n\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
-    
-    # Provide a download button for the generated PDF
-    st.download_button(
-        label="Download learning resources & recommendations",
-        data=all_messages_text,
-        file_name="SkillX_recommendations.txt",
-        mime="text/plain"
-    )
 
 if st.session_state.get("form_submitted", False):
     
