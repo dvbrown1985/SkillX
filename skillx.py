@@ -118,8 +118,8 @@ def download_recommendations():
 
     # Set margins to one inch (25.4 mm)
     one_inch_in_mm = 2
-    pdf.set_margin(one_inch_in_mm)
-    pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm)  # Adjust bottom margin for auto-page-break
+    pdf.set_margins(left=one_inch_in_mm, top=one_inch_in_mm, right=one_inch_in_mm)
+    pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm) # Adjust bottom margin for auto-page-break
 
     # Calculate available width (considering margins)
     available_width = pdf.w - pdf.l_margin - pdf.r_margin
