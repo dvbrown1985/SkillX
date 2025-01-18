@@ -186,7 +186,7 @@ with container_x:
     <div> 
         <h3 style="color:#48acd2; text-align:center;">Discover your next career move</h3>
         <p style="font-size:17px; line-height:1.6;">
-            Our AI technology analyzes <strong>1.5 million jobs </strong> 
+            Skill(X) analyzes <strong>1.5 million jobs </strong> 
             and <strong>skills</strong> to pinpoint roles that are a match for <strong>you</strong>.
         </p>
         <p style="font-size:17px; line-height:1.6;">
