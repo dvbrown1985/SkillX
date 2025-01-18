@@ -1,6 +1,5 @@
 from fpdf import FPDF
 from io import BytesIO
-import textwrap
 import os
 import re
 import pickle
@@ -103,50 +102,6 @@ def predict_top_3_job_roles(model_inputs):
     st.success('Predictions generated!', icon="🤖")
     return predicted_roles
 
-@st.fragment
-def download_recommendations():
-    # Collect all messages in the format 'role: content'
-    all_messages_text = "\n\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
-
-    wrapped_text = "\n\n".join("\n".join(textwrap.wrap(line, width=80)) for line in all_messages_text.split("\n"))
-
-    pdf = FPDF()
-    pdf.add_page()
-
-    pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)
-    pdf.set_font('DejaVu', '', 12)
-
-    # Set margins to one inch (25.4 mm)
-    one_inch_in_mm = 2
-    pdf.set_margins(left=one_inch_in_mm, top=one_inch_in_mm, right=one_inch_in_mm)
-    pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm)  # Adjust bottom margin for auto-page-break
-
-    # Calculate available width (considering margins)
-    available_width = pdf.w - pdf.l_margin - pdf.r_margin
-
-    for line in all_messages_text.split('\n'):
-        wrapped_lines = textwrap.wrap(line, width=int(available_width / 2))
-
-        for wrapped_line in wrapped_lines:
-            pdf.multi_cell(available_width, 8, wrapped_line, align="L")  # Use string "L" for left alignment
-            pdf.ln(8)  # Ensures correct spacing between lines
-
-    # Write PDF to a BytesIO buffer
-    pdf_buffer = BytesIO()
-    pdf.output(pdf_buffer)  # No 'F' argument; writes directly to the buffer
-    pdf_buffer.seek(0)  # Move the pointer to the start of the buffer
-
-    # Get the PDF data as bytes from the buffer
-    pdf_data = pdf_buffer.getvalue()
-
-    # Streamlit download button
-    st.download_button(
-        label="Download learning resources & recommendations",
-        data=pdf_data,
-        file_name="SkillX_recommendations.pdf",
-        mime="application/pdf"
-    )
-
 def extract_job_titles(response_text):
     
 # Display a spinner with the message while the operation is in progress
@@ -221,7 +176,7 @@ expander.write('''
     It is intended for testing and educational purposes only. 
     Please use this prototype with caution and at your own risk.
     
-    Skill(X) is powered by the ModernBERT model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
+    Skill(X) is powered by the all-mpnet-base-v2 model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
 
 ''')
 
@@ -399,7 +354,7 @@ consolidated_prompt = f"""
     Structure:
         
         For each recommended role:
-            "(bold) Recommendation #:" (e.g., "Recommendation #1") followed by **"Job Title". If a role prediction is deemed inappropriate, replace it with a suitable alternative from your knowledge base without any annotation.
+            "Recommendation #: (bold)" (e.g., "Recommendation #1") followed by **"Job Title" (bold). If a role prediction is deemed inappropriate, replace it with a suitable alternative from your knowledge base without any annotation.
             "Job Description" (bold and prominent): Concise and informative (2-3 sentences) focusing on key responsibilities and required skills.
             "Average Annual Salary"(bold font and prominent): If available, provide the average annual salary in US dollars in a uniform font size. If unavailable, state "Salary information unavailable."
             "Skill Match Analysis Summary" (bold and prominent): Provide an elaborate analysis describing how the job seeker's top skills and how they align with the recommended role. Classify their skills as a strong, partial, or weak match.
@@ -424,6 +379,19 @@ consolidated_prompt = f"""
 
 response_text = ""
 model = genai.GenerativeModel("gemini-1.5-flash-002")
+
+@st.fragment
+def download_recommendations():
+    # Collect all messages in the format 'role: content'
+    all_messages_text = "\n\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
+    
+    # Provide a download button for the generated PDF
+    st.download_button(
+        label="Download learning resources & recommendations",
+        data=all_messages_text,
+        file_name="SkillX_recommendations.txt",
+        mime="text/plain"
+    )
 
 if st.session_state.get("form_submitted", False):
     
