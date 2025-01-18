@@ -135,11 +135,13 @@ def download_recommendations():
     pdf_buffer = BytesIO()
     pdf.output(pdf_buffer)  # No 'F' argument; writes directly to the buffer
     pdf_buffer.seek(0)  # Move the pointer to the start of the buffer
+    pdf_data = pdf_buffer.getvalue()
+
 
     # Streamlit download button
     st.download_button(
         label="Download learning resources & recommendations",
-        data=pdf_buffer,
+        data=pdf_data,
         file_name="SkillX_recommendations.pdf",
         mime="application/pdf"
     )
