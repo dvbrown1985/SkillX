@@ -1,4 +1,4 @@
-from fpdf import FPDF, Align
+from fpdf import FPDF
 from io import BytesIO
 import textwrap
 import os
