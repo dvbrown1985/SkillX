@@ -1,6 +1,4 @@
 fpdf
-textwrap
-io
 google==3.0.0
 google-generativeai
 googlesearch_python
