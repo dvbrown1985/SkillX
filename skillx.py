@@ -187,11 +187,10 @@ with container_x:
         <h3 style="color:#48acd2; text-align:center;">Discover your next career move</h3>
         <p style="font-size:17px; line-height:1.6;">
             Skill(X) analyzes <strong>1.5 million jobs </strong> 
-            and <strong>skills</strong> to pinpoint roles that are a match for <strong>you</strong>.
+            and <strong>skills</strong> to pinpoint roles that are a match for <strong>you</strong>. As a fall back, if your skills aren't found in the Skill(X) proprietary model and dataset, Google Gemini recommends roles aligned with your skillset.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            We'll show you how your skills align with each role and provide 
-            detailed job descriptions.
+            To help you earn a promotion or transition into a new career, Skill(X) will provide detailed job recommendations which include descriptions, average annual salaries, how your current skills apply to the recommended role, and links to free learning resources for skill development.
         </p>
         <p style="font-size:17px; line-height:1.6;">
             To get started, we need to ask you a few questions 👇 👇
