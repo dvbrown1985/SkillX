@@ -107,7 +107,7 @@ def predict_top_3_job_roles(model_inputs):
 def download_recommendations():
     # Collect all messages in the format 'role: content'
     all_messages_text = "\n\n".join([f"{msg['role'].capitalize()}: {msg['content']}" for msg in st.session_state.messages])
-    
+
     wrapped_text = "\n\n".join("\n".join(textwrap.wrap(line, width=80)) for line in all_messages_text.split("\n"))
 
     pdf = FPDF()
@@ -117,7 +117,7 @@ def download_recommendations():
     pdf.set_font('DejaVu', '', 12)
 
     # Set margins to one inch (25.4 mm)
-    one_inch_in_mm = 25.4
+    one_inch_in_mm = 2
     pdf.set_margins(left=one_inch_in_mm, top=one_inch_in_mm, right=one_inch_in_mm)
     pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm)  # Adjust bottom margin for auto-page-break
 
@@ -135,8 +135,9 @@ def download_recommendations():
     pdf_buffer = BytesIO()
     pdf.output(pdf_buffer)  # No 'F' argument; writes directly to the buffer
     pdf_buffer.seek(0)  # Move the pointer to the start of the buffer
-    pdf_data = pdf_buffer.getvalue()
 
+    # Get the PDF data as bytes from the buffer
+    pdf_data = pdf_buffer.getvalue()
 
     # Streamlit download button
     st.download_button(
