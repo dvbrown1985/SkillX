@@ -117,7 +117,7 @@ def download_recommendations():
     pdf.set_font('DejaVu', '', 12)
 
     # Set margins to one inch (25.4 mm)
-    one_inch_in_mm = 2
+    one_inch_in_mm = 25.4
     pdf.set_margins(left=one_inch_in_mm, top=one_inch_in_mm, right=one_inch_in_mm)
     pdf.set_auto_page_break(auto=True, margin=one_inch_in_mm)  # Adjust bottom margin for auto-page-break
 
@@ -131,10 +131,12 @@ def download_recommendations():
             pdf.multi_cell(available_width, 8, wrapped_line, align="L")  # Use string "L" for left alignment
             pdf.ln(8)  # Ensures correct spacing between lines
 
+    # Write PDF to a BytesIO buffer
     pdf_buffer = BytesIO()
-    pdf.output(pdf_buffer, 'F')
-    pdf_buffer.seek(0)
+    pdf.output(pdf_buffer)  # No 'F' argument; writes directly to the buffer
+    pdf_buffer.seek(0)  # Move the pointer to the start of the buffer
 
+    # Streamlit download button
     st.download_button(
         label="Download learning resources & recommendations",
         data=pdf_buffer,
