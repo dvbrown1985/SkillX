@@ -176,7 +176,7 @@ expander.write('''
     It is intended for testing and educational purposes only. 
     Please use this prototype with caution and at your own risk.
     
-    Skill(X) is powered by the all-mpnet-base-v2 model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
+    Skill(X) is powered by the Modern BERT model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
 
 ''')
 
