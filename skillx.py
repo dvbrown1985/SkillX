@@ -418,7 +418,7 @@ container2 = st.container(border=True)
 with container2:
     if st.session_state.get("form_submitted", False):
         st.success("Recommendations developed!", icon="🤖")
-        extract_job_titles(response_text)
+        #extract_job_titles(response_text)
         download_recommendations()
     
 container3 = st.container(border=True)
