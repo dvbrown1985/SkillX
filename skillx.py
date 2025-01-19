@@ -176,7 +176,7 @@ expander.write('''
     It is intended for testing and educational purposes only. 
     Please use this prototype with caution and at your own risk.
     
-    Skill(X) is powered by the Modern BERT model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
+    Skill(X) is powered by the all-mpnet-base-v2 model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
 
 ''')
 
@@ -186,13 +186,15 @@ with container_x:
     <div> 
         <h3 style="color:#48acd2; text-align:center;">Discover your next career move</h3>
         <p style="font-size:17px; line-height:1.6;">
-            Skill(X) analyzes 1.5 million jobs and skills to find your perfect role. In the event your skillset doesn't exist in the Skill(X) training data, Google Gemini selects roles for you.
+            Our AI technology analyzes <strong>1.5 million jobs </strong> 
+            and <strong>skills</strong> to pinpoint roles that are a match for <strong>you</strong>.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            After answering a few questions, Skill(X) provides detailed job recommendations with descriptions, salary ranges, skill assessments, and links to free training.
+            We'll show you how your skills align with each role and provide 
+            detailed job descriptions.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            Let's get started 👇 👇
+            To get started, we need to ask you a few questions 👇 👇
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -328,13 +330,14 @@ consolidated_prompt = f"""
 
     Career Goal Logic:
 
-        If the job seeker's career goal is "I want to be promoted.":
+        If the job seeker's Career Goal is "I want to be promoted.":
         Recommend 3 roles: a lead or senior role, a management role, and a director or executive role within the user's current industry.
         
-        If the job seeker's career goal is "I want to transition into an entirely new role.":
+        If the job seeker's Career Goal is "I want to transition into an entirely new role.":
         Utilize {role_predictions} as a starting point.
         
         If any role prediction is deemed inappropriate, replace it with a suitable alternative.
+        
         Recommend 3 suitable roles based on the user's skills and career goals.
     
     User Information:
