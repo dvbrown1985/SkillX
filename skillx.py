@@ -186,7 +186,7 @@ with container_x:
     <div> 
         <h3 style="color:#48acd2; text-align:center;">Discover your next career move</h3>
         <p style="font-size:17px; line-height:1.6;">
-            Skill(X) analyzes 1.5 million jobs and skills to find your perfect role. In the event your skillset doesnt exist in the Skill(X) training data, Google Gemini actively assists in generating role recommendations.
+            Skill(X) analyzes 1.5 million jobs and skills to find your perfect role. In the event your skillset doesn't exist in the Skill(X) training data, Google Gemini selects roles for you.
         </p>
         <p style="font-size:17px; line-height:1.6;">
             After answering a few questions, Skill(X) provides detailed job recommendations with descriptions, salary ranges, skill assessments, and links to free training.
