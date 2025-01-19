@@ -328,10 +328,10 @@ consolidated_prompt = f"""
 
     Career Goal Logic:
 
-        If {response_goal0} is "I want to be promoted.":
-        Recommend 3 roles: a lear or senior role, a management role, and a director or executive role within the user's current industry.
+        If the job seeker's career goal is "I want to be promoted.":
+        Recommend 3 roles: a lead or senior role, a management role, and a director or executive role within the user's current industry.
         
-        If {response_goal0} is "I want to transition into an entirely new role.":
+        If the job seeker's career goal is "I want to transition into an entirely new role.":
         Utilize {role_predictions} as a starting point.
         
         If any role prediction is deemed inappropriate, replace it with a suitable alternative.
