@@ -206,7 +206,7 @@ with container_x:
             Just answer a few simple questions, and we'll provide targeted job recommendations and learning resources.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            Get started now! 👇 👇
+            Let's begin! 👇 👇
         </p>
     </div>
     """, unsafe_allow_html=True)
