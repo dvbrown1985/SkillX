@@ -175,7 +175,9 @@ expander.write('''
     
     If you test the prototype, please note the following:
 
-    - Due to free hosting and usage limitations, the app might not be available 24/7. Limits on the number of concurrent users are in effect and rate limiting may occur.
+    - Due to free hosting and usage limitations, the app might not be available 24/7. 
+    
+    - Limits on the number of concurrent users are in effect and rate limiting may occur.
 
     - Gaps in the roles and skills training data may exist, leading to poor matches. As a fallback, Gemini is asked to generate replacements when this occurs.
     
