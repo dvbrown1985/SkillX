@@ -128,7 +128,9 @@ def extract_job_titles(response_text):
 
                     # Add a delay to respect rate limits
                     time.sleep(0.5)
-
+                
+                print(results)
+                
                 # Append a message to the session state with links for the current job title
                 st.session_state.messages.append({
                     "role": "assistant",
