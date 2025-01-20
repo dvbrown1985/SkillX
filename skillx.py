@@ -1,5 +1,6 @@
 from fpdf import FPDF
 from io import BytesIO
+import time
 import os
 import re
 import pickle
@@ -57,54 +58,45 @@ def generate_ai_response(prompt):
         st.error(f"An error occurred: {e}")
         return None
 
-def predict_top_3_job_roles(model_inputs):
-    """
-    Predicts the top 3 most probable job roles based on the given skills.
-
-    Args:
-    skills_text: A string containing the skills of the individual.
-
-    Returns:
-    A list of tuples, where each tuple contains the predicted job role and its probability.
-    """
-    print("Loading the trained model file...")
-    loaded_model = tf.keras.models.load_model('role_skills_descriptions_industries_trained_model.keras') 
-    print("Trained model loaded.")
-
-    # Load the LabelEncoder
-    print("Loading LabelEncoder...")
-    label_encoder = load('role_skills_descriptions_industries_trained_model.joblib')
-    print("LabelEncoder loaded.")
-
-    # Ensure TensorFlow backend is set (if PyTorch is problematic)
-    os.environ["SENTENCE_TRANSFORMERS_BACKEND"] = "tensorflow"
+top_skills_response0 = ''
+industry_response0 = ''
     
-    print("Loading ML model for inference...")
-    try:
-        ml_model = SentenceTransformer('all-mpnet-base-v2', cache_folder='./sbert_cache')
-        print("ML model loaded.")
-    except Exception as e:
-        print(f"Error loading ML model: {e}")
+def predict_top_roles(top_skills_response0, industry_response0):
+    """
+    Predict the top 3 job roles based on the input skills and industry.
+    """
     
-    print('Creating skill embeddings...')
-    # Preprocess the skills text
-    skill_embedding = ml_model.encode(model_inputs)
-    input_data = tf.convert_to_tensor(skill_embedding, dtype=tf.float32)
-    input_data = tf.expand_dims(input_data, axis=0)
+    # Validate inputs
+    if not top_skills_response0:
+        top_skills_response0 = "No skills provided"
+    if not industry_response0:
+        industry_response0 = "No industry provided"
+    
+    # Combine user inputs into a single feature string
+    input_text = top_skills_response0 + ', ' + industry_response0
+    
+    # Create embedding for the input text
+    input_embedding = ml_model.encode([input_text])  # Ensure it's in a list format for batch processing
 
-    predictions = loaded_model.predict(input_data)
-    top_3_indices = np.argsort(predictions[0])[::-1][:3]
-    top_3_roles = label_encoder.inverse_transform(top_3_indices)
-    top_3_probabilities = predictions[0][top_3_indices]
+    # Ensure tensor shape consistency here (example: reshaping if necessary)
+    input_embedding = tf.convert_to_tensor(input_embedding, dtype=tf.float32)
+    
+    # Get predictions from the model
+    prediction = loaded_model.predict(input_embedding)  # Probabilities for all roles
 
-    predicted_roles = [(role, prob) for role, prob in zip(top_3_roles, top_3_probabilities)]
-    print(predicted_roles)
-    st.success('Predictions generated!', icon="🤖")
-    return predicted_roles
+    # Get the indices of the top 3 probabilities in descending order
+    top_indices = np.argsort(prediction[0])[-3:][::-1]
+    
+    # Decode the top 3 predicted labels to their corresponding roles
+    top_roles = [
+        label_encoder.inverse_transform([index])[0]
+        for index in top_indices
+    ]
+    
+    return top_roles
 
 def extract_job_titles(response_text):
-    
-# Display a spinner with the message while the operation is in progress
+    # Display a spinner with the message while the operation is in progress
     with st.spinner("Locating free learning resources..."):
 
         # Extract job titles from the response_text using a regular expression
@@ -133,6 +125,9 @@ def extract_job_titles(response_text):
                     # Limit the number of results to 3
                     if j >= 2:
                         break
+
+                    # Add a delay to respect rate limits
+                    time.sleep(0.5)
 
                 # Append a message to the session state with links for the current job title
                 st.session_state.messages.append({
@@ -176,7 +171,7 @@ expander.write('''
     It is intended for testing and educational purposes only. 
     Please use this prototype with caution and at your own risk.
     
-    Skill(X) is powered by the Modern BERT model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
+    Skill(X) is powered by the all-mpnet-base-v2 model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
 
 ''')
 
@@ -186,13 +181,15 @@ with container_x:
     <div> 
         <h3 style="color:#48acd2; text-align:center;">Discover your next career move</h3>
         <p style="font-size:17px; line-height:1.6;">
-            Skill(X) analyzes 1.5 million jobs and skills to find your perfect role. In the event your skillset doesn't exist in the Skill(X) training data, Google Gemini selects roles for you.
+            Our AI technology analyzes <strong>1.5 million jobs </strong> 
+            and <strong>skills</strong> to pinpoint roles that are a match for <strong>you</strong>.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            After answering a few questions, Skill(X) provides detailed job recommendations with descriptions, salary ranges, skill assessments, and links to free training.
+            We'll show you how your skills align with each role and provide 
+            detailed job descriptions.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            Let's get started 👇 👇
+            To get started, we need to ask you a few questions 👇 👇
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -309,71 +306,84 @@ print(role_response0)
 top_skills_response0 = st.session_state.state['top_skills_response']
 print(top_skills_response0)
 
-role_predictions = ""
+container_m = st.container(border=True)
+
+with container_m:
     
-if response_goal0 == 'I want to transition into an entirely new role.':
-        
     if st.session_state.get("form_submitted", False):
-        model_inputs = f"{industry_response0}, {top_skills_response0}"
-        st.session_state["role_predictions"] = predict_top_3_job_roles(model_inputs)
-        role_predictions = st.session_state["role_predictions"]
-    else:
-        print(f" Role repsonse: {role_response0}")
-        
-consolidated_prompt = f"""
 
-    Context: You are a highly specialized career advisor with expertise in skill gap analysis and career path development.
+        with st.spinner("Loading model..."):
+            print("Loading the trained model file...")
+            loaded_model = tf.keras.models.load_model('role_skills_descriptions_industries_trained_model.keras') 
+            print("Trained model loaded.")
 
-    Objective: Your primary goal is to provide users with tailored career recommendations based on career goal logic and skillset.
+            # Load the LabelEncoder
+            print("Loading LabelEncoder...")
+            label_encoder = load('role_skills_descriptions_industries_trained_model.joblib')
+            print("LabelEncoder loaded.")
 
-    Career Goal Logic:
+            # Ensure TensorFlow backend is set (if PyTorch is problematic)
+            os.environ["SENTENCE_TRANSFORMERS_BACKEND"] = "tensorflow"
 
-        If {response_goal0} is "I want to be promoted.":
-        Recommend 3 roles: a lear or senior role, a management role, and a director or executive role within the user's current industry.
-        
-        If {response_goal0} is "I want to transition into an entirely new role.":
-        Utilize {role_predictions} as a starting point.
-        
-        If any role prediction is deemed inappropriate, replace it with a suitable alternative.
-        Recommend 3 suitable roles based on the user's skills and career goals.
-    
-    User Information:
+            ml_model = SentenceTransformer('nomic-ai/modernbert-embed-base', cache_folder='./sbert_cache')
 
-    Career Goal: {response_goal0}
-    Current Role: {role_response0}
-    Current Industry: {industry_response0}
-    Top Skills: {top_skills_response0}
-    Target Jobs: {role_predictions}
-    
-    Output Requirements:
+            st.success("Model loaded!", icon="🧠")
 
-        Format: Markdown
+if st.session_state.get("form_submitted", False):
 
-    Structure:
-        
-        For each recommended role:
-            "Recommendation #: (bold)" (e.g., "Recommendation #1") followed by **"Job Title" (bold). If a role prediction is deemed inappropriate, replace it with a suitable alternative from your knowledge base without any annotation.
-            "Job Description" (bold and prominent): Concise and informative (2-3 sentences) focusing on key responsibilities and required skills.
-            "Average Annual Salary"(bold font and prominent): If available, provide the average annual salary in US dollars in a uniform font size. If unavailable, state "Salary information unavailable."
-            "Skill Match Analysis Summary" (bold and prominent): Provide an elaborate analysis describing how the job seeker's top skills and how they align with the recommended role. Classify their skills as a strong, partial, or weak match.
-            "Skill Match Analysis Explained" (bold and prominent): Present the skill match analysis in a table for all of the top skills provided.
-                    "Skill Description"(bold and prominent): Provide a description justifying why the provided skill is relevant to the recommended job.
-                    "Match Strength" (bold and prominent): Classify each skill as either a Strong overall match/partial match/weak overall match based on the skill's relevance to the recommended role.
-                        "Strong overall match"
-                        "Partial match"
-                        "Weak overall match"
-            "How Your Skills Apply to This Role"(bold and prominent): Explain how the user's provided skills can be practically applied, focusing on transferable skills with 3-4 concrete examples.
-            "Skill Development"(bold and prominent): Provide up to 5 specific recommendations in a bullet point format for developing any skills with a weak or medium match. 
-            "Skill Gaps"(bold and prominent): Identify any critical or essential skills for the recommended role which are not provided in the job seeker's top skills: {top_skills_response0}. Provide suggestions to develop the skill gaps you identify.
-    
-        Divider: Insert a clear divider (e.g., "---") between each role recommendation.
-    
-    Limitations:
+    role_predictions = predict_top_roles(top_skills_response0, industry_response0)
+    consolidated_prompt = f"""
 
-        Limit the response to 3 recommended roles.
-        Do not include additional language or commentary beyond the specified structure.
-    
-    """
+        Context: You are a highly specialized career advisor with expertise in skill gap analysis and career path development.
+
+        Objective: Your primary goal is to provide users with tailored job role recommendations based on career goal logic and skillset.
+
+        Career Goal Logic:
+
+            If the job seeker's career goal is "I want to be promoted.":
+            Recommend 3 roles: a lead or senior role, a management role, and a director or executive role within the user's current industry.
+
+            If the job seeker's career goal is "I want to transition into an entirely new role.":
+            Utilize {role_predictions}. However, If any role prediction is entirely unrelated to the job seeker's skills replace the target jobs with a suitable alternative from your own LLM.
+            If you replace a target job with a job from your model be sure to annotate the following "This role was selected by Google Gemini"
+
+        User Information and Skillset:
+
+            Career Goal: {response_goal0}
+            Current Role: {role_response0}
+            Current Industry: {industry_response0}
+            Top Skills: {top_skills_response0}
+            Target Jobs: {role_predictions}
+
+        Output Requirements:
+
+            Format: Markdown
+
+        Structure:
+
+            For each recommended role:
+                "(bold) Recommendation #: " (e.g., "Recommendation #1") followed by **"Job Title" (bold).
+                "Job Description" (bold): Concise and informative (2-3 sentences) focusing on key responsibilities and required skills.
+                "Average Annual Salary"(bold): If available, provide the average annual salary in US dollars in a uniform font size. If unavailable, state "Salary information unavailable."
+                "Skill Match Analysis Summary" (bold): Provide an elaborate analysis describing how the job seeker's top skills and how they align with the recommended role. Classify their skills as a strong, partial, or weak match.
+                "Skill Match Analysis Explained" (bold): Present the skill match analysis in a table for all of the top skills provided.
+                        "Skill Description"(bold): Provide a description justifying why the provided skill is relevant to the recommended job.
+                        "Match Strength" (bold): Classify each skill as either a Strong overall match/partial match/weak overall match based on the skill's relevance to the recommended role.
+                            "Strong overall match"
+                            "Partial match"
+                            "Weak overall match"
+                "How Your Skills Apply to This Role"(bold): Explain how the user's provided skills can be practically applied, focusing on transferable skills with 3-4 concrete examples.
+                "Skill Development"(bold): Provide up to 5 specific recommendations in a bullet point format for developing any skills with a weak or medium match. 
+                "Skill Gaps"(bold): Identify any critical or essential skills for the recommended role which are not provided in the job seeker's top skills: {top_skills_response0}. Provide suggestions to develop the skill gaps you identify.
+
+            Divider: Insert a clear divider (e.g., "---") between each role recommendation.
+
+        Limitations:
+
+            Limit the response to 3 recommended roles.
+            Do not include additional language or commentary beyond the specified structure.
+
+        """
 
 response_text = ""
 model = genai.GenerativeModel("gemini-1.5-flash-002")
@@ -418,7 +428,7 @@ container2 = st.container(border=True)
 with container2:
     if st.session_state.get("form_submitted", False):
         st.success("Recommendations developed!", icon="🤖")
-        #extract_job_titles(response_text)
+        extract_job_titles(response_text)
         download_recommendations()
     
 container3 = st.container(border=True)
