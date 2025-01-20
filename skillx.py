@@ -173,25 +173,38 @@ expander.write('''
     It is intended for testing and educational purposes only. 
     Please use this prototype with caution and at your own risk.
     
-    Skill(X) is powered by the all-mpnet-base-v2 model, Google Gemini, Google Search, Numpy, Python, Sentence Transformer, SKLearn, Streamlit and TensorFlow.
+    If you test the prototype, please note the following:
 
-''')
+    - Due to free hosting and usage limitations, the app might not be available 24/7. Limits on the number of concurrent users are in effect and rate limiting may occur.
+
+    - Gaps in the roles and skills training data may exist, leading to poor matches. As a fallback, Gemini is asked to generate replacements when this occurs.
+    
+    Skill(X) is powered by:
+    
+    - Google Gemini
+    - Google Search 
+    - Modern BERT
+    - Numpy 
+    - Python
+    - Sentence Transformer
+    - SKLearn
+    - Streamlit
+    - TensorFlow
+    ''')
 
 container_x = st.container(border=True)
 with container_x:
     st.markdown("""
-    <div> 
-        <h3 style="color:#48acd2; text-align:center;">Discover your next career move</h3>
+    <div>
+        <h3 style="color:#48acd2; text-align:center;">Find Your Perfect Career Match, Fast</h3>
         <p style="font-size:17px; line-height:1.6;">
-            Our AI technology analyzes <strong>1.5 million jobs </strong> 
-            and <strong>skills</strong> to pinpoint roles that are a match for <strong>you</strong>.
+            Skill(X) is trained on 1.6 million jobs and associated skills to predict roles that match your skills. Get personalized recommendations in minutes.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            We'll show you how your skills align with each role and provide 
-            detailed job descriptions.
+            Just answer a few simple questions, and we'll provide you with targeted job opportunities and helpful career resources.
         </p>
         <p style="font-size:17px; line-height:1.6;">
-            To get started, we need to ask you a few questions 👇 👇
+            Get started now! 👇 👇
         </p>
     </div>
     """, unsafe_allow_html=True)
