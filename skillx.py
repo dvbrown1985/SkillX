@@ -190,7 +190,6 @@ expander.write('''
     - Python
     - SKLearn - Label Encoder & Sentence Transformer
     - Streamlit
-    - TensorFlow
     ''')
 
 container_x = st.container(border=True)
