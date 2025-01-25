@@ -188,8 +188,7 @@ expander.write('''
     - Modern BERT
     - Numpy 
     - Python
-    - Sentence Transformer
-    - SKLearn
+    - SKLearn - Label Encoder & Sentence Transformer
     - Streamlit
     - TensorFlow
     ''')
