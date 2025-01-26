@@ -171,15 +171,12 @@ expander = st.expander("Disclaimer and Product Information")
 expander.write('''
     This is a prototype under development and may contain bugs or errors. 
     It is intended for testing and educational purposes only. 
-    Please use this prototype with caution and at your own risk.
     
     If you test the prototype, please note the following:
 
-    - Due to free hosting and usage limitations, the app might not be available 24/7. 
-    
-    - Limits on the number of concurrent users are in effect and rate limiting may occur.
+    - The app might be rate-limited with sub-optimal performance due to free services and usage limitations.
 
-    - Gaps in the roles and skills training data may exist, leading to poor matches. As a fallback, Gemini is asked to generate replacements when this occurs.
+    - Limits on the number of concurrent users are in effect.
     
     Skill(X) is powered by:
     
