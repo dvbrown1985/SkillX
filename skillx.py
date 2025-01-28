@@ -169,24 +169,29 @@ with container1:
 # Disclaimer
 expander = st.expander("Disclaimer and Product Information")
 expander.write('''
-    This is a prototype under development and may contain bugs or errors. 
-    It is intended for testing and educational purposes only. 
+
+    This is a prototype under development and may contain bugs or errors. It is intended for educational, learning, and testing purposes only. 
     
     If you test the prototype, please note the following:
 
     - The app might be rate-limited with sub-optimal performance due to free services and usage limitations.
 
     - Limits on the number of concurrent users are in effect.
+
+    The job descriptions, salary info, skill match analysis, skill development recommendations, and skill gaps are all developed and output from the Gemini 1.5 flash LLM.
+
+    Learning resource links are developed by the Google Search API. 
     
-    Skill(X) is powered by:
+    Skill(X) is powered by the tech:
     
     - Google Gemini
     - Google Search 
-    - Modern BERT
+    - Modern BERT NLP Model (English)
     - Numpy 
     - Python
     - SKLearn - Label Encoder & Sentence Transformer
     - Streamlit
+
     ''')
 
 container_x = st.container(border=True)
