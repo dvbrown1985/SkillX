@@ -185,7 +185,8 @@ expander.write('''
     Skill(X) is powered by the following tech:
     
     - Google Gemini
-    - Google Search 
+    - Google Search
+    - Kaggle Dataset - https://www.kaggle.com/datasets/ravindrasinghrana/job-description-dataset
     - Modern BERT NLP Model (English)
     - Numpy 
     - Python
