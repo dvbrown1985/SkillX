@@ -170,7 +170,7 @@ with container1:
 expander = st.expander("Disclaimer and Product Information")
 expander.write('''
 
-    This is a prototype under development and may contain bugs or errors. It is intended for educational, and testing purposes only. 
+    This is a prototype under development and may contain bugs or errors. It is intended for educational and research purposes only. 
     
     If you test the prototype, please note the following:
 
