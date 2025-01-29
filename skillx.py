@@ -182,7 +182,7 @@ expander.write('''
 
     Learning resource links are developed by the Google Search API. 
     
-    Skill(X) is powered by the following tech:
+    Skill(X) is powered by the following resources:
     
     - Google Gemini
     - Google Search
