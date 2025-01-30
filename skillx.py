@@ -404,7 +404,8 @@ if st.session_state.get("form_submitted", False):
         """
 
 response_text = ""
-model = genai.GenerativeModel("gemini-1.5-flash-002")
+#model = genai.GenerativeModel("gemini-1.5-flash-002")
+model = genai.GenerativeModel("gemini-2.0-flash-exp")
 
 @st.fragment
 def download_recommendations():
