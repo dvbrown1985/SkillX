@@ -178,7 +178,7 @@ expander.write('''
 
     - Limits on the number of concurrent users are in effect.
 
-    The job descriptions, salary info, skill match analysis, skill development recommendations, and skill gaps are developed and output from the Gemini 1.5 flash LLM.
+    The job descriptions, salary info, skill match analysis, skill development recommendations, and skill gaps are developed and output from the Gemini 2.0 exp LLM.
 
     Learning resource links are developed by the Google Search API. 
     
