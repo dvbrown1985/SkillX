@@ -201,7 +201,7 @@ with container_x:
     <div>
         <h3 style="color:#48acd2; text-align:center;">Plan Your Next Career Move</h3>
         <p style="font-size:17px; line-height:1.6;">
-            Skill(X) is trained on 1.6 million jobs and associated skills to predict roles that match your skills.
+            Skill(X) is fine-tuned and trained on 1.6 million jobs and associated skills to predict roles that match your skills using the pre-trained Modern BERT model.
         </p>
         <p style="font-size:17px; line-height:1.6;">
             Just answer a few simple questions, and we'll provide targeted job recommendations and learning resources.
