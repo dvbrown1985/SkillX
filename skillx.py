@@ -350,7 +350,8 @@ with container_m:
 if st.session_state.get("form_submitted", False):
 
     role_predictions = predict_top_roles(top_skills_response0, industry_response0)
-    consolidated_prompt = f"""
+    consolidated_prompt = f
+        """
 
         Context: You are a highly specialized career advisor with expertise in skill gap analysis and career path development.
 
@@ -377,7 +378,7 @@ if st.session_state.get("form_submitted", False):
 
             Format: Markdown
 
-        Structure:
+        Structure - **Ensure that line breaks are used for optimal readability**:
 
             For each recommended role:
                 "(bold) Recommendation #: " (e.g., "Recommendation #1") followed by **"Job Title" (bold).
