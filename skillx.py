@@ -377,9 +377,9 @@ if st.session_state.get("form_submitted", False):
 
             Format: Markdown
 
-        Structure - **Ensure that line breaks are used for optimal readability**:
+        Structure:
 
-            For each recommended role:
+            For each recommended role Ensure that line breaks are used for optimal readability:
                 "(bold) Recommendation #: " (e.g., "Recommendation #1") followed by **"Job Title" (bold).
                 "Job Description" (bold): Concise and informative (2-3 sentences) focusing on key responsibilities and required skills.
                 "Average Annual Salary"(bold): If available, provide the average annual salary in US dollars in a uniform font size. If unavailable, state "Salary information unavailable."
