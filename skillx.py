@@ -127,7 +127,7 @@ def extract_job_titles(response_text):
                         break
 
                     # Add a delay to respect rate limits
-                    time.sleep(0.5)
+                    time.sleep(1.0)
                 
                 print(results)
                 
