@@ -147,7 +147,7 @@ def extract_job_titles(response_text):
         st.success('Learning resources found!', icon="🤖")
 
 # Set up the generative AI library with your API key
-GOOGLE_API_KEY = 'AIzaSyAfxmrmwhu62afqajL84gI5hta6LDUs9yc'
+GOOGLE_API_KEY = 'AIzaSyAPda5zKTYR1ieSBJRu5trrEZOq_Qc5C5w'
 genai.configure(api_key=GOOGLE_API_KEY)
 
 LOGO = "SkillX.jpg"
